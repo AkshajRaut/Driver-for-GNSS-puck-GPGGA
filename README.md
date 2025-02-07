@@ -43,17 +43,19 @@ The GNSS puck provides several differently formatted messages. We will focus our
 2. Parse the $GPGGA string for the latitude, longitude, and altitude. We have provided an example device driver for a depth sensor in the appendix section so that you can use that as a template
 3. Convert the latitude & longitude to UTM.
 4. Define a custom ROS message (called GPSmsg.msg) with a header, latitude, longitude, altitude, utm_easting, utm_northing, zone, letter as fields.
-5. Please match the naming & capitalization
-6. Ensure correct data types.
-7. The Header is supposed to be a ROS Header data type. This is very important especially when you start working with tfs and do sensor fusion in ROS
-The Latitude & Longitude are supposed to be signed floats.
-8. The ROS Header should contain the GPGGA time stamp & not your system time (as it may be out of sync which could cause problems in a real-world system).
-9. The frame_ID should be a constant “GPS1_Frame” since our publisher is giving us data from the solo GPS sensor we gave you.
-10. Your ROS node should then publish this custom ROS message over a topic called /gps
-- You now have a working driver, let’s make it more modular. Name this GPS driver as driver.py and add a feature to run this file with some argument. This argument will contain the path to the serial port of the GPS puck (example /dev/ttyUSB2 . Ofcourse the puck will not always be at the same port so it allows us to connect it anywhere without the script failing)
-12. Even though this driver is now sufficiently modular, on a real robot we can have many sensors & launching their drivers individually can be too much work. This is where we shall use the power of ROS.
-13. Create a launch file called “driver.launch”
-14. This launch file should be able to take in an argument called “port” which we will specify for the puck’s port.
-Have this launch file run your gps_driver.py with the argument that was passed when it was launched.
-If you have done everything correctly, run the following command & you should get the same results you were getting at 2.5
-$ roslaunch driver.launch port:=”/dev/ttyUSB0” #Or basically any
+- Please match the naming & capitalization
+-  Ensure correct data types.
+- The Header is supposed to be a ROS Header data type. This is very important especially when you start working with tfs and do sensor fusion in ROS
+- The Latitude & Longitude are supposed to be signed floats.
+- The ROS Header should contain the GPGGA time stamp & not your system time (as it may be out of sync which could cause problems in a real-world system).
+- The frame_ID should be a constant “GPS1_Frame” since our publisher is giving us data from the solo GPS sensor we gave you.
+5. Your ROS node should then publish this custom ROS message over a topic called /gps
+6. You now have a working driver, let’s make it more modular. Name this GPS driver as driver.py and add a feature to run this file with some argument. This argument will contain the path to the serial port of the GPS puck (example /dev/ttyUSB2 . Ofcourse the puck will not always be at the same port so it allows us to connect it anywhere without the script failing)
+7. Even though this driver is now sufficiently modular, on a real robot we can have many sensors & launching their drivers individually can be too much work. This is where we shall use the power of ROS.
+- Create a launch file called “gps_launch.py”
+- This launch file should be able to take in an argument called “port” which we will specify for the puck’s port.
+- Have this launch file run your gps_driver.py with the argument that was passed when it was launched.
+- If you have done everything correctly, run the following command & you should
+get the same results you were getting before (but with a single command!)
+
+        ros2 launch gps_driver gps_launch.py port:=/dev/pts/6 #Or basically any ttyUSB*
