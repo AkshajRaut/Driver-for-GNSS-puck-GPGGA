@@ -50,7 +50,7 @@ The Latitude & Longitude are supposed to be signed floats.
 8. The ROS Header should contain the GPGGA time stamp & not your system time (as it may be out of sync which could cause problems in a real-world system).
 9. The frame_ID should be a constant “GPS1_Frame” since our publisher is giving us data from the solo GPS sensor we gave you.
 10. Your ROS node should then publish this custom ROS message over a topic called /gps
-11. You now have a working driver, let’s make it more modular. Name this GPS driver as driver.py and add a feature to run this file with some argument. This argument will contain the path to the serial port of the GPS puck (example /dev/ttyUSB2 . Ofcourse the puck will not always be at the same port so it allows us to connect it anywhere without the script failing)
+- You now have a working driver, let’s make it more modular. Name this GPS driver as driver.py and add a feature to run this file with some argument. This argument will contain the path to the serial port of the GPS puck (example /dev/ttyUSB2 . Ofcourse the puck will not always be at the same port so it allows us to connect it anywhere without the script failing)
 12. Even though this driver is now sufficiently modular, on a real robot we can have many sensors & launching their drivers individually can be too much work. This is where we shall use the power of ROS.
 13. Create a launch file called “driver.launch”
 14. This launch file should be able to take in an argument called “port” which we will specify for the puck’s port.
