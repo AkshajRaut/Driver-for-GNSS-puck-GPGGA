@@ -2,9 +2,9 @@
 Collected Stationary and walking data using a GNSS Puck. Parsed the $GPGGA string for the latitude, longitude, and altitude. Converted the latitude and longitude to UTM.
 
 
-## Follow the steps to perform experiment of parsing the $GPGGA message from GNSS puck
+### Follow the steps to perform experiment of parsing the $GPGGA message from GNSS puck
 
-# 1. Set up the GPS puck
+## 1. Set up the GPS puck
 
 If you are using a virtual machine, like virtual box, you may have to:
 
@@ -33,3 +33,27 @@ To save data to a text file, you need to use –C flag on minicom. In minicom, C
 
     more gps_data.txt
 ##
+
+
+## 2. Write a Device Driver for GNSS puck to parse $GPGGA
+
+The GNSS puck provides several differently formatted messages. We will focus our attention on the messages that are formatted according to the $GPGGA format.
+
+1. Ensure you can read the data from the puck (If you do not have the puck, you can use minicom as a virtual puck & the same driver should work with the real puck)
+2. Parse the $GPGGA string for the latitude, longitude, and altitude. We have provided an example device driver for a depth sensor in the appendix section so that you can use that as a template
+3. Convert the latitude & longitude to UTM.
+4. Define a custom ROS message (called GPSmsg.msg) with a header, latitude, longitude, altitude, utm_easting, utm_northing, zone, letter as fields.
+5. Please match the naming & capitalization
+6. Ensure correct data types.
+7. The Header is supposed to be a ROS Header data type. This is very important especially when you start working with tfs and do sensor fusion in ROS
+The Latitude & Longitude are supposed to be signed floats.
+8. The ROS Header should contain the GPGGA time stamp & not your system time (as it may be out of sync which could cause problems in a real-world system).
+9. The frame_ID should be a constant “GPS1_Frame” since our publisher is giving us data from the solo GPS sensor we gave you.
+10. Your ROS node should then publish this custom ROS message over a topic called /gps
+11. You now have a working driver, let’s make it more modular. Name this GPS driver as driver.py and add a feature to run this file with some argument. This argument will contain the path to the serial port of the GPS puck (example /dev/ttyUSB2 . Ofcourse the puck will not always be at the same port so it allows us to connect it anywhere without the script failing)
+12. Even though this driver is now sufficiently modular, on a real robot we can have many sensors & launching their drivers individually can be too much work. This is where we shall use the power of ROS.
+13. Create a launch file called “driver.launch”
+14. This launch file should be able to take in an argument called “port” which we will specify for the puck’s port.
+Have this launch file run your gps_driver.py with the argument that was passed when it was launched.
+If you have done everything correctly, run the following command & you should get the same results you were getting at 2.5
+$ roslaunch driver.launch port:=”/dev/ttyUSB0” #Or basically any
