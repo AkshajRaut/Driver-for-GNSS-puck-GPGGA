@@ -59,3 +59,15 @@ The GNSS puck provides several differently formatted messages. We will focus our
 get the same results you were getting before (but with a single command!)
 
         ros2 launch gps_driver gps_launch.py port:=/dev/pts/6 #Or basically any ttyUSB*
+##
+
+## 3. Go outside and collect data
+1. Stationary data outdoors: In a new rosbag recording, go outside and collect 10 minutes ofdata at one spot. Name this rosbag “stationary_data”
+2. Walk in a straight line outdoors: In a new rosbag recording, walk in a straight line for a few hundred meters. Name this rosbag “walking_data”
+##
+
+## 4. Data Analysis
+Read the rosbag data into matlab/python.
+
+1. Analyze stationary data
+2. Analyze straight line walk data
