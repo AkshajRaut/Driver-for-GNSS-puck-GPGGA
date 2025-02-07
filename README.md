@@ -14,7 +14,7 @@ Select the USB settings from the left pane
 Add the USB device in the list from by clicking on the icon
 Boot the VM with the USB device plugged in
 Make sure the device is selected/captured in USB settings (click on it) before you can see it in /dev/ttyUSB* When you will connect your GPS device, you can see the device name with this terminal command.
-##    
+   
     ls –lt /dev/tty* | head
 You will see a list of devices from which you have to figure out your device file identifier. Let us say it is /dev/ttyUSB2. Run this command without the GPS plugged in, the missing COM port is your GPS device. Then you need to set the read write permissions for reading the device properly.
 
