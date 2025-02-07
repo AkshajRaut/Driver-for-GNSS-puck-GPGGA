@@ -58,7 +58,7 @@ The GNSS puck provides several differently formatted messages. We will focus our
 - If you have done everything correctly, run the following command & you should
 get the same results you were getting before (but with a single command!)
 
-        ros2 launch gps_driver gps_launch.py port:=/dev/pts/6 #Or basically any ttyUSB*
+      ros2 launch gps_driver gps_launch.py port:=/dev/pts/6 #Or basically any ttyUSB*
 ##
 
 ## 3. Go outside and collect data
